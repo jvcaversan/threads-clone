@@ -5,17 +5,21 @@ import { useAuth } from "../context/AuthContext";
 import { Redirect } from "expo-router";
 
 export default function Index() {
-  const { session } = useAuth();
+  const { session, loading } = useAuth();
 
-  if (!session) {
-    return <Redirect href={"/(public)/signin"} />;
+  if (loading) {
+    return <ActivityIndicator size="large" color="green" />;
   }
+
   if (session) {
     return <Redirect href={"/(private)/(tabs)/home"} />;
   }
+  if (!session) {
+    return <Redirect href={"/(public)/signin"} />;
+  }
   return (
     <View className="flex-1 bg-white justify-center items-center">
-      <ActivityIndicator size={20} color="green" />
+      <ActivityIndicator size="large" color="green" />
     </View>
   );
 }
