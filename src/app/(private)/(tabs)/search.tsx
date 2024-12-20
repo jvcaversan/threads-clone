@@ -1,11 +1,10 @@
+import SafeAreaViewFixed from "@/src/components/SafeAreaViewFix";
 import { Text } from "@/src/components/ui/text";
-
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Search() {
   return (
-    <SafeAreaView>
+    <SafeAreaViewFixed>
       <Text>Search Screen</Text>
-    </SafeAreaView>
+    </SafeAreaViewFixed>
   );
 }

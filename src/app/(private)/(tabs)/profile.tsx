@@ -1,9 +1,8 @@
+import SafeAreaViewFixed from "@/src/components/SafeAreaViewFix";
 import { Button } from "@/src/components/ui/button";
 import { Text } from "@/src/components/ui/text";
 import { supabase } from "@/src/lib/supabase";
-import { A } from "@expo/html-elements";
 import { Alert } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Profile() {
   const handleLogout = async () => {
@@ -15,9 +14,9 @@ export default function Profile() {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaViewFixed>
       <Text>Profile Screen</Text>
       <Button onPress={handleLogout} />
-    </SafeAreaView>
+    </SafeAreaViewFixed>
   );
 }

@@ -1,10 +1,10 @@
+import SafeAreaViewFixed from "@/src/components/SafeAreaViewFix";
 import { Text } from "@/src/components/ui/text";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function PostPage() {
   return (
-    <SafeAreaView>
+    <SafeAreaViewFixed>
       <Text>Post Screen</Text>
-    </SafeAreaView>
+    </SafeAreaViewFixed>
   );
 }
