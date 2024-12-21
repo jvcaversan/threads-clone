@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { supabase } from "@/src/lib/supabase";
-import { View, TouchableOpacity, Pressable } from "react-native";
-import { Text } from "@/src/components/ui/text";
-import { Input, InputField } from "@/src/components/ui/input";
-import { Button, ButtonText } from "@/src/components/ui/button";
-import { AntDesign } from "@expo/vector-icons"; // Para ícones do Google
-import { Ionicons } from "@expo/vector-icons"; // Para ícones do Apple
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Pressable,
+  ImageBackground,
+} from "react-native";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { Link, router } from "expo-router";
+import { supabase } from "@/src/lib/supabase";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -27,86 +30,91 @@ export default function SignIn() {
     setLoading(false);
 
     if (error) {
-      setErrorMessage("Email ou Senha inválidos");
+      setErrorMessage("Email ou senha inválidos");
       return;
     }
-    setLoading(false);
+
     router.replace("/(private)/(tabs)/home");
   };
 
-  const handleGoogleLogin = () => {
-    console.log("Google Login");
-    // Adicione lógica para login com Google aqui
-  };
-
-  const handleAppleLogin = () => {
-    console.log("Apple Login");
-    // Adicione lógica para login com Apple aqui
+  const handleSocialLogin = (platform: any) => {
+    console.log(`${platform} Login`);
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100 justify-center px-6">
-      <View className="bg-white rounded-lg shadow-md p-6">
-        <Text className="text-2xl font-semibold text-center text-gray-800 mb-3">
-          Fazer Login
+    <SafeAreaView className="flex-1 justify-center items-center bg-black/50">
+      <View className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        <Text className="text-3xl font-extrabold text-gray-800 text-center mb-6">
+          Bem-vindo de Volta!
         </Text>
-        {errorMessage ? (
-          <Text className="text-red-500 text-center mb-3">{errorMessage}</Text>
-        ) : null}
-        <Input variant="outline" size="md" className="mb-4">
-          <InputField
-            placeholder="email"
+        {errorMessage && (
+          <Text className="text-red-500 text-center mb-4">{errorMessage}</Text>
+        )}
+        <View className="space-y-4 gap-3">
+          <TextInput
+            placeholder="Digite seu email"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
             autoCapitalize="none"
-            className="text-gray-800"
+            className="w-full p-4 bg-gray-100 rounded-lg text-gray-800"
+            placeholderTextColor="#9CA3AF"
           />
-        </Input>
-        <Input variant="outline" size="md" className="mb-4">
-          <InputField
-            placeholder="senha"
+          <TextInput
+            placeholder="Digite sua senha"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
-            className="text-gray-800"
+            className="w-full p-4 bg-gray-100 rounded-lg text-gray-800"
+            placeholderTextColor="#9CA3AF"
           />
-        </Input>
-        <Button
-          onPress={handleLogin}
-          isDisabled={loading}
-          className={`w-full py-2 min-h-[40px] rounded-md ${
-            loading ? "bg-gray-400" : "bg-blue-500"
-          } flex justify-center items-center`}
-        >
-          <ButtonText className="text-white text-lg">
-            {loading ? "Loading..." : "Login"}
-          </ButtonText>
-        </Button>
-        <View className="flex-row justify-between items-center mt-6">
+          <Pressable
+            disabled={loading}
+            onPress={handleLogin}
+            className={`w-full py-3 rounded-lg ${
+              loading ? "bg-gray-400" : "bg-blue-600"
+            }`}
+          >
+            <Text className="text-center text-white font-semibold">
+              {loading ? "Entrando..." : "Entrar"}
+            </Text>
+          </Pressable>
+        </View>
+
+        <TouchableOpacity className="mt-4">
+          <Text className="text-sm text-blue-600 text-center font-medium">
+            Esqueceu sua senha?
+          </Text>
+        </TouchableOpacity>
+
+        <View className="flex-row items-center my-6">
           <View className="h-[1px] bg-gray-300 flex-1"></View>
-          <Text className="px-4 text-gray-500">OU</Text>
+          <Text className="px-4 text-gray-500">Ou continue com</Text>
           <View className="h-[1px] bg-gray-300 flex-1"></View>
         </View>
-        <View className="flex-row justify-center items-center gap-5 mt-6 mb-2">
+
+        <View className="flex-row justify-center gap-4">
           <TouchableOpacity
-            onPress={handleGoogleLogin}
-            className="w-12 h-12 rounded-full bg-white border border-gray-300 justify-center items-center"
+            onPress={() => handleSocialLogin("Google")}
+            className="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center shadow-sm"
           >
-            <AntDesign name="google" size={24} color="red" />
+            <AntDesign name="google" size={24} color="#EA4335" />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={handleAppleLogin}
-            className="w-12 h-12 rounded-full bg-black justify-center items-center"
+            onPress={() => handleSocialLogin("Apple")}
+            className="w-14 h-14 bg-black rounded-full flex items-center justify-center shadow-sm"
           >
-            <Ionicons name="logo-apple" size={24} color="white" />
+            <Ionicons name="logo-apple" size={24} color="#FFF" />
           </TouchableOpacity>
         </View>
-        <View className="mt-5 flex-row justify-center items-center">
-          <Text className="text-gray-500">Não possui conta? </Text>
+
+        <View className="mt-6 flex-row justify-center">
+          <Text className="text-gray-500">Não possui uma conta? </Text>
           <Link href={"/(public)/signup"} asChild>
             <Pressable>
-              <Text className="text-blue-500 underline">Criar Conta</Text>
+              <Text className="text-blue-600 font-semibold underline">
+                Cadastre-se
+              </Text>
             </Pressable>
           </Link>
         </View>

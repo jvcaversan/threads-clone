@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { supabase } from "@/src/lib/supabase";
-import { Alert, Pressable, View } from "react-native";
-import { Text } from "@/src/components/ui/text";
-import { Input, InputField } from "@/src/components/ui/input";
-import { Button, ButtonText } from "@/src/components/ui/button";
+import { Alert, Pressable, Text, TextInput, View } from "react-native";
 import { Link, router } from "expo-router";
 
 export default function SignIn() {
@@ -46,44 +43,41 @@ export default function SignIn() {
         {errorMessage ? (
           <Text className="text-red-500 text-center mb-3">{errorMessage}</Text>
         ) : null}
-        <Input variant="outline" size="md" className="mb-4">
-          <InputField
-            placeholder="nome"
-            value={name}
-            onChangeText={setName}
-            className="text-gray-800"
-          />
-        </Input>
-        <Input variant="outline" size="md" className="mb-4">
-          <InputField
-            placeholder="email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            className="text-gray-800"
-          />
-        </Input>
-        <Input variant="outline" size="md" className="mb-4">
-          <InputField
-            placeholder="senha"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            className="text-gray-800"
-          />
-        </Input>
-        <Button
+        <TextInput
+          placeholder="nome"
+          value={name}
+          onChangeText={setName}
+          className="text-gray-800"
+        />
+        <TextInput
+          placeholder="email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          className="text-gray-800"
+        />
+
+        <TextInput
+          placeholder="senha"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          className="text-gray-800"
+        />
+        <Pressable
+          disabled={loading}
+          style={{
+            width: "100%",
+            padding: 2,
+            minHeight: 40,
+            borderRadius: 4,
+            backgroundColor: loading ? "gray" : "blue",
+          }}
           onPress={handleLogin}
-          isDisabled={loading}
-          className={`w-full py-2 min-h-[40px] rounded-md ${
-            loading ? "bg-gray-400" : "bg-blue-500"
-          } flex justify-center items-center`}
         >
-          <ButtonText className="text-white text-lg">
-            {loading ? "Carregando..." : "Criar Conta"}
-          </ButtonText>
-        </Button>
+          <Text>{loading ? "Carregando..." : "Criar Conta"}</Text>
+        </Pressable>
 
         <View className="mt-5 flex-row justify-center items-center">
           <Text className=" text-gray-500">Já possui conta? </Text>

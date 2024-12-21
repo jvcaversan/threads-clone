@@ -5,17 +5,20 @@ import { ActivityIndicator } from "react-native";
 export default function PrivateLayout() {
   const { session, loading } = useAuth();
 
-  if (loading) {
-    return <ActivityIndicator />;
-  }
-
   if (!session) {
     return <Redirect href={"/(public)/signin"} />;
+  }
+  if (loading) {
+    return <ActivityIndicator size="large" color="green" />;
   }
 
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="modal"
+        options={{ headerShown: false, presentation: "modal" }}
+      />
     </Stack>
   );
 }

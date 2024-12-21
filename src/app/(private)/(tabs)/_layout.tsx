@@ -1,5 +1,7 @@
-import { Tabs } from "expo-router";
+import { Text } from "@/src/components/ui/text";
+import { router, Tabs } from "expo-router";
 import { Home, Search, Plus, Heart, User } from "lucide-react-native";
+import { Pressable } from "react-native";
 
 export default function TabsLayout() {
   return (
@@ -26,6 +28,14 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="post"
         options={{
+          tabBarButton: (props) => (
+            <Pressable
+              {...props}
+              onPress={() => {
+                router.push("/modal");
+              }}
+            />
+          ),
           title: "Post",
           tabBarIcon: ({ color }) => <Plus size={24} color={color} />,
         }}
