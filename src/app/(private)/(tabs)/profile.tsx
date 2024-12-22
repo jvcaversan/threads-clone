@@ -1,7 +1,8 @@
+import { useProfile } from "@/src/api/profile";
 import SafeAreaViewFixed from "@/src/components/SafeAreaViewFix";
 import { useUser } from "@/src/context/AuthContext";
 import { supabase } from "@/src/lib/supabase";
-import { useQuery } from "@tanstack/react-query";
+import { router } from "expo-router";
 import {
   ActivityIndicator,
   Alert,
@@ -10,30 +11,13 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { Feather } from "@expo/vector-icons";
 
 export default function Profile() {
-  const getUserProfile = async (id: string) => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", id)
-      .single();
-
-    if (error) throw error;
-    return data;
-  };
-
   const user = useUser();
 
-  const {
-    data: profile,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["profile"],
-    queryFn: () => getUserProfile(user?.id),
-  });
+  const id = user.id;
+
+  const { data: profile, isLoading, error } = useProfile(id);
 
   if (isLoading) {
     return (
@@ -57,7 +41,7 @@ export default function Profile() {
   };
 
   const handleEditProfile = () => {
-    Alert.alert("Editar Perfil", "Funcionalidade ainda não implementada!");
+    router.push("/(private)/editprofile");
   };
 
   return (
@@ -73,7 +57,7 @@ export default function Profile() {
 
         {/* Nome e Bio */}
         <Text className="text-xl font-semibold text-gray-800 mt-4">
-          {profile.full_name || "Nome do Usuário"}
+          {profile.name || "Nome do Usuário"}
         </Text>
         <Text className="text-sm text-gray-600 text-center mt-2">
           {profile.bio || "Adicione uma breve descrição sobre você."}

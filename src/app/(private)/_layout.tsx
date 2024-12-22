@@ -19,6 +19,10 @@ export default function PrivateLayout() {
         name="modal"
         options={{ headerShown: false, presentation: "modal" }}
       />
+      <Stack.Screen
+        name="editprofile"
+        options={{ headerShown: false, presentation: "modal" }}
+      />
     </Stack>
   );
 }
