@@ -1,4 +1,3 @@
-import { Text } from "@/src/components/ui/text";
 import { router, Tabs } from "expo-router";
 import { Home, Search, Plus, Heart, User } from "lucide-react-native";
 import { Pressable } from "react-native";
@@ -7,7 +6,7 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#0a7ea4",
+        tabBarActiveTintColor: "black",
         headerShown: false,
       }}
     >

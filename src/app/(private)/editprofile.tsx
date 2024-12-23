@@ -48,15 +48,13 @@ export default function EditProfile() {
             source={{
               uri: "https://via.placeholder.com/150",
             }}
-            className="w-32 h-32 rounded-full border-4 border-blue-500 shadow-lg"
+            className="w-32 h-32 rounded-full border-4 black shadow-lg"
           />
           <View className="absolute bottom-2 right-2 bg-white rounded-full p-2 shadow">
-            <Ionicons name="camera" size={20} color="#3b82f6" />
+            <Ionicons name="camera" size={20} color="black" />
           </View>
         </TouchableOpacity>
-        <Text className="text-blue-500 mt-3 text-sm font-medium">
-          Alterar Foto
-        </Text>
+        <Text className="black mt-3 text-sm font-medium">Alterar Foto</Text>
       </View>
 
       <View className="mt-10">
@@ -83,7 +81,7 @@ export default function EditProfile() {
 
         <TouchableOpacity
           onPress={handleSave}
-          className="bg-blue-500 py-4 rounded-full items-center shadow-lg"
+          className="bg-black py-4 rounded-full items-center shadow-lg"
         >
           <Text className="text-white text-lg font-medium">
             Salvar Alterações

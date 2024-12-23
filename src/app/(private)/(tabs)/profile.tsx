@@ -22,7 +22,7 @@ export default function Profile() {
   if (isLoading) {
     return (
       <View className="flex-1 justify-center items-center bg-gray-100">
-        <ActivityIndicator size="large" color="#007BFF" />
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }
@@ -52,7 +52,7 @@ export default function Profile() {
           source={{
             uri: profile.photo || "https://via.placeholder.com/150",
           }}
-          className="w-28 h-28 rounded-full border-2 border-blue-500 shadow-md"
+          className="w-28 h-28 rounded-full border-2 black shadow-md"
         />
 
         {/* Nome e Bio */}
@@ -67,7 +67,7 @@ export default function Profile() {
         <View className="mt-6 w-full space-y-4">
           <TouchableOpacity
             onPress={handleEditProfile}
-            className="bg-blue-500 py-3 rounded-full items-center shadow-md"
+            className="bg-black py-3 rounded-full items-center shadow-md"
           >
             <Text className="text-white font-medium">Editar Perfil</Text>
           </TouchableOpacity>

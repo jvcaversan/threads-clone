@@ -1,8 +1,34 @@
-import { Text, TextInput, TouchableOpacity, View, Image } from "react-native";
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Image,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
 import { Feather, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useUser } from "@/src/context/AuthContext";
+import { useProfile } from "@/src/api/profile";
 
 export default function PostScreen() {
+  const user = useUser();
+  const id = user.id;
+  const { data: profile, isLoading, error } = useProfile(id);
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 justify-center items-center bg-gray-100">
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
+
+  if (error) {
+    Alert.alert("Erro", error.message);
+    return null;
+  }
   return (
     <View className="flex-1 bg-white">
       <View className="flex-row items-center justify-between px-4 py-3 border-b border-gray-200">
@@ -10,14 +36,14 @@ export default function PostScreen() {
           <Feather name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Text className="text-blue-500 font-semibold">Postar</Text>
+          <Text className="black font-semibold">Postar</Text>
         </TouchableOpacity>
       </View>
 
       <View className="flex-row p-4">
         <Image
           source={{
-            uri: "https://via.placeholder.com/150",
+            uri: profile.photo,
           }}
           className="w-12 h-12 rounded-full mr-3"
         />
