@@ -30,6 +30,7 @@ export const useUpdateProfileById = () => {
           photo: data.photo,
           name: data.name,
           bio: data.bio,
+          updated_at: data.updated_at,
         })
         .eq("id", data.id)
         .select()

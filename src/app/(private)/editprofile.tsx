@@ -22,6 +22,7 @@ export default function EditProfile() {
         photo: "https://via.placeholder.com/150",
         name: name,
         bio,
+        updated_at: new Date().toISOString(),
       },
       {
         onSuccess: () => {
