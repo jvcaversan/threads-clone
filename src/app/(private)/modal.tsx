@@ -40,22 +40,26 @@ export default function PostScreen() {
         </TouchableOpacity>
       </View>
 
-      <View className="flex-row p-4">
+      <View className="flex-row p-4 items-center mr-16">
         <Image
           source={{
             uri: profile.photo,
           }}
-          className="w-12 h-12 rounded-full mr-3"
+          className="w-12 h-12 rounded-full mr-2"
         />
 
-        <TextInput
-          className="flex-1 text-lg text-gray-800"
-          placeholder="No que você está pensando?"
-          placeholderTextColor="#A9A9A9"
-          multiline
-          numberOfLines={6}
-          style={{ textAlignVertical: "top" }}
-        />
+        <View className="flex-column mb-5">
+          <Text>{profile.name}</Text>
+
+          <TextInput
+            className="text-lg text-gray-800"
+            placeholder="No que você está pensando?"
+            placeholderTextColor="#A9A9A9"
+            multiline
+            numberOfLines={6}
+            style={{ textAlignVertical: "top" }}
+          />
+        </View>
       </View>
 
       <View className="flex-row items-center px-4 py-3 border-t border-gray-200 justify-center">
@@ -67,6 +71,9 @@ export default function PostScreen() {
         </TouchableOpacity>
         <TouchableOpacity className="mr-4">
           <MaterialIcons name="gif" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity className="mr-4">
+          <Feather name="mic" size={24} color="black" />
         </TouchableOpacity>
         <TouchableOpacity className="mr-4">
           <Feather name="hash" size={24} color="black" />
