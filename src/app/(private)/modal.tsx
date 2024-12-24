@@ -11,11 +11,41 @@ import { Feather, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useUser } from "@/src/context/AuthContext";
 import { useProfile } from "@/src/api/profile";
+import { useCreatePost } from "@/src/api/posts";
+import { useState } from "react";
 
 export default function PostScreen() {
+  const [post, setPost] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
   const user = useUser();
   const id = user.id;
   const { data: profile, isLoading, error } = useProfile(id);
+  const { mutate: createPost } = useCreatePost();
+
+  const handleCreatePost = () => {
+    if (!post) {
+      Alert.alert("Escreva alguma coisa para postar");
+      return;
+    }
+    setIsPosting(true);
+    createPost(
+      {
+        user_id: id,
+        post,
+      },
+
+      {
+        onSuccess: () => {
+          setPost("");
+          setIsPosting(false);
+          router.replace("/home");
+        },
+        onError: (error) => {
+          console.log(error?.message);
+        },
+      }
+    );
+  };
 
   if (isLoading) {
     return (
@@ -35,7 +65,11 @@ export default function PostScreen() {
         <TouchableOpacity onPress={() => router.back()}>
           <Feather name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleCreatePost}
+          disabled={isPosting}
+          style={{ opacity: isPosting ? 0.5 : 1 }}
+        >
           <Text className="black font-semibold">Postar</Text>
         </TouchableOpacity>
       </View>
@@ -54,6 +88,8 @@ export default function PostScreen() {
           <TextInput
             className="text-lg text-gray-800"
             placeholder="No que você está pensando?"
+            value={post}
+            onChangeText={setPost}
             placeholderTextColor="#A9A9A9"
             multiline
             numberOfLines={6}
