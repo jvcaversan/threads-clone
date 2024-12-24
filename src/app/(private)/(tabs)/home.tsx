@@ -6,9 +6,6 @@ import {
   Text,
   View,
   StyleSheet,
-  Image,
-  TextInput,
-  Button,
   RefreshControl,
 } from "react-native";
 import React, { useState } from "react";
@@ -98,6 +95,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
+    marginBottom: -30,
   },
   header: {
     paddingVertical: 16,
@@ -147,22 +145,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  footer: {
-    paddingVertical: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    borderTopWidth: 1,
-    borderTopColor: "#ddd",
-    backgroundColor: "#f8f8f8",
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    borderColor: "#ddd",
-    borderWidth: 1,
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    marginRight: 8,
   },
 });
