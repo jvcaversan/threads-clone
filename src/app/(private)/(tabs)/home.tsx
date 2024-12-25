@@ -47,7 +47,7 @@ export default function Home() {
     );
 
   return (
-    <SafeAreaViewFixed className="flex-1 px-4 -mb-8">
+    <SafeAreaViewFixed className="flex-1 px-4 bg-white">
       <View className="py-4 bg-gray-100 border-b border-gray-300">
         <Text className="text-2xl font-bold text-center">Home</Text>
       </View>
