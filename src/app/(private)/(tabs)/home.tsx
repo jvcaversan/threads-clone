@@ -36,6 +36,10 @@ export default function Home() {
     );
   }
 
+  if (error) {
+    return console.warn("Erro", error.message);
+  }
+
   const sortedPosts = posts
     ?.slice()
     .sort(

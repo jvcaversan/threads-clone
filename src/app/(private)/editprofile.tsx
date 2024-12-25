@@ -64,7 +64,7 @@ export default function EditProfile() {
             value={name}
             onChangeText={setName}
             placeholder="Digite seu nome"
-            className="bg-white rounded-lg px-4 py-3 shadow text-gray-700"
+            className="bg-white rounded-lg px-4 py-3 shadow text-gray-700 items-center justify-center"
           />
         </View>
 
