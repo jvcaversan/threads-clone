@@ -5,7 +5,6 @@ import {
   FlatList,
   Text,
   View,
-  StyleSheet,
   RefreshControl,
 } from "react-native";
 import React, { useState } from "react";
@@ -31,7 +30,7 @@ export default function Home() {
       <ActivityIndicator
         size="large"
         color="black"
-        style={{ flex: 1, justifyContent: "center" }}
+        className="flex-1 justify-center"
       />
     );
   }
@@ -48,31 +47,31 @@ export default function Home() {
     );
 
   return (
-    <SafeAreaViewFixed style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Home</Text>
+    <SafeAreaViewFixed className="flex-1 px-4 -mb-8">
+      <View className="py-4 bg-gray-100 border-b border-gray-300">
+        <Text className="text-2xl font-bold text-center">Home</Text>
       </View>
 
       <FlatList
         data={sortedPosts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.postCard}>
-            <View style={styles.profileHeader}>
+          <View className="bg-white rounded-lg shadow-md p-4 my-2">
+            <View className="flex-row items-center mb-2">
               {/* <Image
                 source={{
                   uri:
                     item.profiles?.[0]?.photo ||
                     "https://via.placeholder.com/40",
                 }}
-                style={styles.profileImage}
+                className="w-10 h-10 rounded-full mr-2"
               /> */}
-              <Text style={styles.profileName}>
+              <Text className="font-bold text-lg">
                 {item.profiles ? item.profiles.name : "Anônimo"}
               </Text>
             </View>
-            <Text style={styles.postText}>{item.post}</Text>
-            <Text style={styles.postDate}>
+            <Text className="text-base mb-2">{item.post}</Text>
+            <Text className="text-sm text-gray-500">
               Criado em: {new Date(item.created_at).toLocaleString()}
             </Text>
           </View>
@@ -86,68 +85,11 @@ export default function Home() {
           />
         }
         ListEmptyComponent={
-          <View style={styles.emptyList}>
-            <Text>Nenhum post disponível.</Text>
+          <View className="flex-1 justify-center items-center">
+            <Text className="text-gray-500">Nenhum post disponível.</Text>
           </View>
         }
       />
     </SafeAreaViewFixed>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    marginBottom: -30,
-  },
-  header: {
-    paddingVertical: 16,
-    backgroundColor: "#f8f8f8",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-  },
-  headerText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  postCard: {
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    marginVertical: 8,
-    padding: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  profileHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    marginRight: 8,
-  },
-  profileName: {
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  postText: {
-    marginBottom: 8,
-    fontSize: 16,
-  },
-  postDate: {
-    color: "#555",
-    fontSize: 12,
-  },
-  emptyList: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
