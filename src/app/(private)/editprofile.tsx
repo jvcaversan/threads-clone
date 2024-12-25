@@ -76,6 +76,9 @@ export default function EditProfile() {
             placeholder="Fale um pouco sobre você"
             multiline
             className="bg-white rounded-lg px-4 py-3 shadow text-gray-700 h-32"
+            style={{
+              textAlignVertical: "top",
+            }}
           />
         </View>
 
