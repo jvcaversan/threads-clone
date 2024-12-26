@@ -47,16 +47,16 @@ export default function Home() {
     );
 
   return (
-    <SafeAreaViewFixed className="mb-10 bg-white">
-      <View className="py-4 border-b border-gray-300">
-        <Text className="text-2xl font-bold text-center">Home</Text>
+    <SafeAreaViewFixed className="bg-white">
+      <View className="border-b border-gray-300 p-2">
+        <Text className="mb-1 text-2xl font-bold text-center">Home</Text>
       </View>
 
       <FlatList
         data={sortedPosts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View className="bg-white rounded-lg shadow-md p-4 my-2">
+          <View className="bg-white rounded-lg shadow-md p-4 my-3">
             <View className="flex-row items-center mb-2">
               {/* <Image
                 source={{
