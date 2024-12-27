@@ -3,6 +3,15 @@ import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 import { supabase } from "@/src/lib/supabase";
 import { useQueryClient } from "@tanstack/react-query";
 
+export type PostType = {
+  id: string;
+  post: string | null;
+  created_at: string | number | Date;
+  profiles: {
+    name: string | null;
+  };
+};
+
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
 

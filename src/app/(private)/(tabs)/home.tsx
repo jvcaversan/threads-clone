@@ -7,23 +7,13 @@ import {
   View,
   RefreshControl,
 } from "react-native";
-import React, { useState } from "react";
-
-interface Profile {
-  name: string;
-  photo?: string; // Adicionando foto do perfil
-}
-
-interface Post {
-  id: string;
-  post: string | null;
-  created_at: string | null;
-  profiles: Profile[];
-}
+import React from "react";
+import { useUser } from "@/src/context/AuthContext";
+import PostItem from "@/src/components/PostItem";
 
 export default function Home() {
   const { data: posts, error, isLoading, refetch, isFetching } = usePosts();
-  const [newPost, setNewPost] = useState<string>("");
+  const user = useUser();
 
   if (isLoading) {
     return (
@@ -36,46 +26,33 @@ export default function Home() {
   }
 
   if (error) {
-    return console.warn("Erro", error.message);
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-gray-500">Erro ao carregar os posts.</Text>
+      </View>
+    );
   }
 
-  const sortedPosts = posts
-    ?.slice()
-    .sort(
-      (a, b) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    );
+  const sortedPosts =
+    posts
+      ?.slice()
+      .sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      ) || [];
 
   return (
-    <SafeAreaViewFixed className="bg-white">
-      <View className="border-b border-gray-300 p-2">
-        <Text className="mb-1 text-2xl font-bold text-center">Home</Text>
+    <SafeAreaViewFixed className="flex-1 bg-white">
+      {/* Header */}
+      <View className="border-b border-gray-300 p-4 bg-white">
+        <Text className="text-xl font-bold text-center text-black">Início</Text>
       </View>
 
+      {/* FlatList */}
       <FlatList
         data={sortedPosts}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View className="bg-white rounded-lg shadow-md p-4 my-3">
-            <View className="flex-row items-center mb-2">
-              {/* <Image
-                source={{
-                  uri:
-                    item.profiles?.[0]?.photo ||
-                    "https://via.placeholder.com/40",
-                }}
-                className="w-10 h-10 rounded-full mr-2"
-              /> */}
-              <Text className="font-bold text-lg">
-                {item.profiles ? item.profiles.name : "Anônimo"}
-              </Text>
-            </View>
-            <Text className="text-base mb-2">{item.post}</Text>
-            <Text className="text-sm text-gray-500">
-              Criado em: {new Date(item.created_at).toLocaleString()}
-            </Text>
-          </View>
-        )}
+        renderItem={({ item }) => <PostItem post={item} />}
         refreshControl={
           <RefreshControl
             refreshing={isFetching}
@@ -85,8 +62,10 @@ export default function Home() {
           />
         }
         ListEmptyComponent={
-          <View className="flex-1 justify-center items-center">
-            <Text className="text-gray-500">Nenhum post disponível.</Text>
+          <View className="flex-1 justify-center items-center mt-32">
+            <Text className="text-gray-500 text-base">
+              Nenhum post disponível.
+            </Text>
           </View>
         }
       />
