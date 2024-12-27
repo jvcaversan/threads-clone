@@ -1,4 +1,3 @@
-import { usePosts } from "@/src/api/posts";
 import SafeAreaViewFixed from "@/src/components/SafeAreaViewFix";
 import {
   ActivityIndicator,
@@ -10,9 +9,11 @@ import {
 import React from "react";
 import { useUser } from "@/src/context/AuthContext";
 import PostItem from "@/src/components/PostItem";
+import useSortedPosts from "@/src/hooks/useSortedPosts";
 
 export default function Home() {
-  const { data: posts, error, isLoading, refetch, isFetching } = usePosts();
+  const { sortedPosts, error, isLoading, refetch, isFetching } =
+    useSortedPosts();
   const user = useUser();
 
   if (isLoading) {
@@ -32,14 +33,6 @@ export default function Home() {
       </View>
     );
   }
-
-  const sortedPosts =
-    posts
-      ?.slice()
-      .sort(
-        (a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      ) || [];
 
   return (
     <SafeAreaViewFixed className="flex-1 bg-white">

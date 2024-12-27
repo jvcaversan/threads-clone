@@ -24,7 +24,7 @@ export default function PostItem({ post }: any) {
         source={{
           uri: post.profilePicture || "https://via.placeholder.com/48",
         }}
-        className="w-12 h-12 rounded-full mr-3"
+        className="w-12 h-12 rounded-full mr-2"
       />
       <View className="flex-1">
         {/* Header do Post */}
