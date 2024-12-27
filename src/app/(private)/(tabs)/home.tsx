@@ -18,26 +18,24 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <ActivityIndicator
-        size="large"
-        color="black"
-        className="flex-1 justify-center"
-      />
+      <SafeAreaViewFixed className="flex-1 bg-white justify-center items-center">
+        <ActivityIndicator size="large" color="black" />
+      </SafeAreaViewFixed>
     );
   }
 
   if (error) {
     return (
-      <View className="flex-1 justify-center items-center">
+      <SafeAreaViewFixed className="flex-1 bg-white justify-center items-center">
         <Text className="text-gray-500">Erro ao carregar os posts.</Text>
-      </View>
+      </SafeAreaViewFixed>
     );
   }
 
   return (
-    <SafeAreaViewFixed className="flex-1 bg-white">
-      <View className="border-b border-gray-300 p-4 bg-white">
-        <Text className="text-xl font-bold text-center text-black">Início</Text>
+    <SafeAreaViewFixed className="bg-white">
+      <View className="border-b border-gray-300 bg-white px-4 py-3 items-center">
+        <Text className="text-xl font-bold text-black">Início</Text>
       </View>
 
       <FlatList
@@ -52,6 +50,7 @@ export default function Home() {
             progressBackgroundColor="#fff"
           />
         }
+        contentContainerStyle={{ paddingBottom: 60 }} // Padding para evitar o botão fixo da tab bar
         ListEmptyComponent={
           <View className="flex-1 justify-center items-center mt-32">
             <Text className="text-gray-500 text-base">
