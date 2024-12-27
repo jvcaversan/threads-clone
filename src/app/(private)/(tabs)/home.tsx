@@ -36,12 +36,10 @@ export default function Home() {
 
   return (
     <SafeAreaViewFixed className="flex-1 bg-white">
-      {/* Header */}
       <View className="border-b border-gray-300 p-4 bg-white">
         <Text className="text-xl font-bold text-center text-black">Início</Text>
       </View>
 
-      {/* FlatList */}
       <FlatList
         data={sortedPosts}
         keyExtractor={(item) => item.id}

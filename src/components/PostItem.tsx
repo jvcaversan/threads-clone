@@ -27,7 +27,6 @@ export default function PostItem({ post }: any) {
         className="w-12 h-12 rounded-full mr-2"
       />
       <View className="flex-1">
-        {/* Header do Post */}
         <View className="flex-row justify-between items-center mb-1">
           <Text className="font-bold text-base">
             {post.profiles ? post.profiles.name : "Anônimo"}
@@ -39,10 +38,9 @@ export default function PostItem({ post }: any) {
             })}
           </Text>
         </View>
-        {/* Conteúdo do Post */}
+
         <Text className="text-sm text-gray-800 mb-2">{post.post}</Text>
 
-        {/* Ações do Post */}
         <View className="flex-row justify-between w-3/4 mt-2">
           <TouchableOpacity
             className="flex-row items-center space-x-1"
