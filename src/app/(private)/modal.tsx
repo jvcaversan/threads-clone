@@ -13,6 +13,7 @@ import { useUser } from "@/src/context/AuthContext";
 import { useProfile } from "@/src/api/profile";
 import { useCreatePost } from "@/src/api/posts";
 import { useState } from "react";
+import PostIcons from "@/src/components/PostIcons";
 
 export default function PostScreen() {
   const [post, setPost] = useState("");
@@ -98,29 +99,7 @@ export default function PostScreen() {
         </View>
       </View>
 
-      <View className="flex-row items-center px-4 py-3 border-t border-gray-200 justify-center">
-        <TouchableOpacity className="mr-4">
-          <Feather name="image" size={24} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity className="mr-4">
-          <FontAwesome5 name="camera" size={24} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity className="mr-4">
-          <MaterialIcons name="gif" size={24} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity className="mr-4">
-          <Feather name="mic" size={24} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity className="mr-4">
-          <Feather name="hash" size={24} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity className="mr-4">
-          <Feather name="smile" size={24} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Feather name="map-pin" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
+      <PostIcons />
     </View>
   );
 }
