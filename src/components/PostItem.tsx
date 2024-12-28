@@ -14,6 +14,19 @@ export default function PostItem({ post }: any) {
   const user = useUser();
 
   useEffect(() => {
+    const fetchLike = async () => {
+      const { data } = await supabase
+        .from("likes")
+        .select("*")
+        .eq("user_id", user.id)
+        .eq("post_id", post.id);
+
+      if (data && data.length > 0) {
+        setLikeRecord(data[0]);
+        setLikes(true);
+      }
+    };
+
     fetchLike();
   }, []);
 
@@ -24,20 +37,6 @@ export default function PostItem({ post }: any) {
       deleteLike();
     }
   }, [likes]);
-
-  const fetchLike = async () => {
-    const { data, error } = await supabase
-      .from("likes")
-      .select("*")
-      .eq("user_id", user.id)
-      .eq("post_id", post.id)
-      .select();
-
-    if (data && data.length > 0) {
-      setLikeRecord(data[0]);
-      setLikes(true);
-    }
-  };
 
   const saveLike = async () => {
     if (likeRecord) {
