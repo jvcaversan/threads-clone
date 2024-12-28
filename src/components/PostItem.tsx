@@ -77,16 +77,16 @@ export default function PostItem({ post }: any) {
   };
 
   return (
-    <View className="bg-white shadow-lg rounded-lg p-4 mx-4 mt-2">
+    <View className="bg-white shadow-lg rounded-lg p-2 mt-2">
       {/* Header */}
-      <View className="flex-row mb-4">
+      <View className="flex-row mb-4 gap-2">
         <Image
           source={{
             uri: post.profilePicture || "https://via.placeholder.com/48",
           }}
-          className="w-12 h-12 rounded-full border border-gray-200 mr-4"
+          className="w-12 h-12 rounded-full border border-gray-200"
         />
-        <View className="flex-1">
+        <View>
           <Text className="text-base font-semibold text-gray-900">
             {post.profiles ? post.profiles.name : "Anônimo"}
           </Text>

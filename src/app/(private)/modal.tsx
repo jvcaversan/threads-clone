@@ -75,7 +75,7 @@ export default function PostScreen() {
         </TouchableOpacity>
       </View>
 
-      <View className="flex-row p-4 items-center mr-16">
+      <View className="flex-row p-4 items-center">
         <Image
           source={{
             uri: profile.photo,
@@ -98,7 +98,6 @@ export default function PostScreen() {
           />
         </View>
       </View>
-
       <PostIcons />
     </View>
   );

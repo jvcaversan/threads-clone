@@ -10,7 +10,7 @@ import { Feather } from "@expo/vector-icons";
 
 export default function PostIcons() {
   return (
-    <View className="flex-row items-center px-4 py-3 border-t border-gray-200 justify-center">
+    <View className="flex-row items-center gap-4 justify-center">
       <TouchableOpacity className="mr-4">
         <Feather name="image" size={24} color="black" />
       </TouchableOpacity>
