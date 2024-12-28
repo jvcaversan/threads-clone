@@ -3,18 +3,71 @@ import { useState, useEffect } from "react";
 import { TouchableOpacity, Image, Text, View } from "react-native";
 import { useUser } from "../context/AuthContext";
 import { useTimeSincePost } from "../hooks/useTimeSincePost";
+import { supabase } from "../lib/supabase";
 
 export default function PostItem({ post }: any) {
   const [likes, setLikes] = useState(false);
+  const [likeRecord, setLikeRecord] = useState<{ id: string } | null>(null);
   const [retweets, setRetweets] = useState<{ [postId: string]: number }>({});
 
   const timeSincePost = useTimeSincePost(post.created_at);
-
   const user = useUser();
 
-  const handleLike = () => {
-    setLikes(!likes);
-    console.log(user.id);
+  useEffect(() => {
+    fetchLike();
+  }, []);
+
+  useEffect(() => {
+    if (likes) {
+      saveLike();
+    } else {
+      deleteLike();
+    }
+  }, [likes]);
+
+  const fetchLike = async () => {
+    const { data, error } = await supabase
+      .from("likes")
+      .select("*")
+      .eq("user_id", user.id)
+      .eq("post_id", post.id)
+      .select();
+
+    if (data && data.length > 0) {
+      setLikeRecord(data[0]);
+      setLikes(true);
+    }
+  };
+
+  const saveLike = async () => {
+    if (likeRecord) {
+      return;
+    }
+    const { data } = await supabase
+      .from("likes")
+      .insert([
+        {
+          user_id: user.id,
+          post_id: post.id,
+        },
+      ])
+      .select();
+
+    if (data && data.length > 0) {
+      setLikeRecord(data[0]);
+    }
+  };
+
+  const deleteLike = async () => {
+    if (likeRecord) {
+      const { error } = await supabase
+        .from("likes")
+        .delete()
+        .eq("id", likeRecord!.id);
+      if (!error) {
+        setLikeRecord(null);
+      }
+    }
   };
 
   const handleRetweet = (postId: string) => {
@@ -49,11 +102,9 @@ export default function PostItem({ post }: any) {
       {/* Actions */}
       <View className="flex-row justify-between border-t border-gray-200 pt-3">
         {/* Likes */}
-        <TouchableOpacity
-          className="flex-row items-center space-x-2"
-          onPress={handleLike}
-        >
+        <TouchableOpacity className="flex-row items-center space-x-2">
           <Ionicons
+            onPress={() => setLikes(!likes)}
             name={likes ? "heart" : "heart-outline"}
             size={22}
             color={likes ? "red" : "#6B7280"}

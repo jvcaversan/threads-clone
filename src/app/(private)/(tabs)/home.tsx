@@ -7,14 +7,12 @@ import {
   RefreshControl,
 } from "react-native";
 import React from "react";
-import { useUser } from "@/src/context/AuthContext";
 import PostItem from "@/src/components/PostItem";
 import useSortedPosts from "@/src/hooks/useSortedPosts";
 
 export default function Home() {
   const { sortedPosts, error, isLoading, refetch, isFetching } =
     useSortedPosts();
-  const user = useUser();
 
   if (isLoading) {
     return (
