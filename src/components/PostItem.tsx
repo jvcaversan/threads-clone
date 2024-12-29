@@ -86,7 +86,7 @@ export default function PostItem({ post }: any) {
           }}
           className="w-12 h-12 rounded-full border border-gray-200"
         />
-        <View>
+        <View className="justify-between flex-1">
           <Text className="text-base font-semibold text-gray-900">
             {post.profiles ? post.profiles.name : "Anônimo"}
           </Text>
