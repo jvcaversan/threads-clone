@@ -9,10 +9,12 @@ import {
 import React from "react";
 import PostItem from "@/src/components/PostItem";
 import useSortedPosts from "@/src/hooks/useSortedPosts";
+import { usePosts } from "@/src/api/posts";
 
 export default function Home() {
-  const { sortedPosts, error, isLoading, refetch, isFetching } =
-    useSortedPosts();
+  const { data: posts, error, isLoading, refetch, isFetching } = usePosts();
+
+  const sortedPosts = useSortedPosts(posts);
 
   if (isLoading) {
     return (

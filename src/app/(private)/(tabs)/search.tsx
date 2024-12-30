@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import SafeAreaViewFixed from "@/src/components/SafeAreaViewFix";
 import { supabase } from "@/src/lib/supabase";
 import PostItem from "@/src/components/PostItem";
+import useSortedPosts from "@/src/hooks/useSortedPosts";
 
 export default function SearchPosts() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,13 +27,15 @@ export default function SearchPosts() {
 
     const { data, error } = await supabase
       .from("posts")
-      .select("*")
+      .select("*, profiles(name)")
       .ilike("post", `%${searchQuery}%`); // Busca case-insensitive
 
     setSearchResults(data || []);
     setLoading(false);
     return data;
   };
+
+  const sortedSearchResults = useSortedPosts(searchResults);
 
   return (
     <SafeAreaViewFixed className="flex-1 bg-white">
@@ -77,9 +80,9 @@ export default function SearchPosts() {
           <View className="flex-1 justify-center items-center">
             <Text className="text-red-500">{error}</Text>
           </View>
-        ) : searchResults.length > 0 ? (
+        ) : sortedSearchResults.length > 0 ? (
           <FlatList
-            data={searchResults}
+            data={sortedSearchResults}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <PostItem post={item} />}
             contentContainerStyle={{ paddingBottom: 20 }}

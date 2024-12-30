@@ -1,15 +1,18 @@
-import { usePosts } from "@/src/api/posts";
+import { useMemo } from "react";
 
-export default function useSortedPosts() {
-  const { data: posts, error, isLoading, refetch, isFetching } = usePosts();
+const useSortedPosts = (list) => {
+  const sortedPosts = useMemo(() => {
+    return (
+      list
+        ?.slice()
+        .sort(
+          (a, b) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        ) || []
+    );
+  }, [list]);
 
-  const sortedPosts =
-    posts
-      ?.slice()
-      .sort(
-        (a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      ) || [];
+  return sortedPosts;
+};
 
-  return { sortedPosts, error, isLoading, refetch, isFetching };
-}
+export default useSortedPosts;
