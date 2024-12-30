@@ -8,27 +8,31 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { supabase } from "@/src/lib/supabase";
 import PostItem from "@/src/components/PostItem";
 import useSortedPosts from "@/src/hooks/useSortedPosts";
 import SafeAreaViewFixed from "@/src/components/SafeAreaViewFix";
+import { supabase } from "@/src/lib/supabase";
 
 export default function SearchPosts() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
 
     setLoading(true);
-    setError(null);
+    setError("");
 
     const { data, error } = await supabase
       .from("posts")
       .select("*, profiles(name)")
       .ilike("post", `%${searchQuery}%`); // Busca case-insensitive
+
+    if (error) {
+      setError(error.message);
+    }
 
     setSearchResults(data || []);
     setLoading(false);
@@ -36,6 +40,10 @@ export default function SearchPosts() {
   };
 
   const sortedSearchResults = useSortedPosts(searchResults);
+
+  const handleClear = () => {
+    setSearchQuery("");
+  };
 
   return (
     <SafeAreaViewFixed className="flex-1 bg-white" edges={["top"]}>
@@ -56,10 +64,9 @@ export default function SearchPosts() {
             placeholder="Buscar posts..."
             className="flex-1 p-3 text-black"
             returnKeyType="search"
-            onSubmitEditing={handleSearch}
           />
           {searchQuery.length > 0 && (
-            <TouchableOpacity onPress={() => setSearchQuery("")}>
+            <TouchableOpacity onPress={handleClear}>
               <Ionicons name="close-circle" size={20} color="gray" />
             </TouchableOpacity>
           )}
