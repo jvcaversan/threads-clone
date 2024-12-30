@@ -8,10 +8,10 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import SafeAreaViewFixed from "@/src/components/SafeAreaViewFix";
 import { supabase } from "@/src/lib/supabase";
 import PostItem from "@/src/components/PostItem";
 import useSortedPosts from "@/src/hooks/useSortedPosts";
+import SafeAreaViewFixed from "@/src/components/SafeAreaViewFix";
 
 export default function SearchPosts() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -38,9 +38,9 @@ export default function SearchPosts() {
   const sortedSearchResults = useSortedPosts(searchResults);
 
   return (
-    <SafeAreaViewFixed className="flex-1 bg-white">
+    <SafeAreaViewFixed className="flex-1 bg-white" edges={["top"]}>
       {/* Header */}
-      <View className="border-b border-gray-200 p-4 flex-row items-center bg-white">
+      <View className="border-b border-gray-200 flex-row items-center bg-white">
         <Text className="flex-1 text-lg font-bold text-center text-black">
           Buscar Posts
         </Text>
