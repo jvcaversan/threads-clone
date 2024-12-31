@@ -28,7 +28,7 @@ export default function SearchPosts() {
     const { data, error } = await supabase
       .from("posts")
       .select("*, profiles(name)")
-      .ilike("post", `%${searchQuery}%`); // Busca case-insensitive
+      .ilike("post", `%${searchQuery}%`);
 
     if (error) {
       setError(error.message);
