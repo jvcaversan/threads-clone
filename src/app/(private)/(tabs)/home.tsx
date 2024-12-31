@@ -1,18 +1,12 @@
 import SafeAreaViewFixed from "@/src/components/SafeAreaViewFix";
-import {
-  ActivityIndicator,
-  FlatList,
-  Text,
-  View,
-  RefreshControl,
-} from "react-native";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import React from "react";
 import PostItem from "@/src/components/PostItem";
 import useSortedPosts from "@/src/hooks/useSortedPosts";
 import { usePosts } from "@/src/api/posts";
 
 export default function Home() {
-  const { data: posts, error, isLoading, refetch, isFetching } = usePosts();
+  const { data: posts, error, isLoading, refetch } = usePosts();
 
   const sortedPosts = useSortedPosts(posts);
 
@@ -42,15 +36,9 @@ export default function Home() {
         data={sortedPosts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <PostItem post={item} />}
-        refreshControl={
-          <RefreshControl
-            refreshing={isFetching}
-            onRefresh={refetch}
-            colors={["#000"]}
-            progressBackgroundColor="#fff"
-          />
-        }
-        contentContainerStyle={{ paddingBottom: 60 }} // Padding para evitar o botão fixo da tab bar
+        refreshing={isLoading}
+        onRefresh={refetch}
+        contentContainerStyle={{ paddingBottom: 60 }}
         ListEmptyComponent={
           <View className="flex-1 justify-center items-center mt-32">
             <Text className="text-gray-500 text-base">

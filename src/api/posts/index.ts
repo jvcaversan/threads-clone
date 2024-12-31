@@ -1,7 +1,6 @@
 import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 
 import { supabase } from "@/src/lib/supabase";
-import { useQueryClient } from "@tanstack/react-query";
 
 export type PostType = {
   id: string;
@@ -13,8 +12,6 @@ export type PostType = {
 };
 
 export const useCreatePost = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     async mutationFn(data: any) {
       const { data: createPost, error } = await supabase
@@ -29,9 +26,6 @@ export const useCreatePost = () => {
         throw new Error(error.message);
       }
       return createPost;
-    },
-    async onSuccess() {
-      await queryClient.invalidateQueries({ queryKey: ["post"] });
     },
   });
 };
